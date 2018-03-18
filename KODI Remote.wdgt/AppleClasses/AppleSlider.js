@@ -407,7 +407,7 @@ function AppleVerticalSlider(slider, onchanged)
 	this.trackMiddlePath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_vmid.png";
 	this.trackEndPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_vbottom.png";
 	this.trackEndLength = 8;
-	this.thumbPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_thumb.png";
+	this.thumbPath = "file://AppleClasses/Images/slide_thumb.png";
 	this.thumbLength = 23;
 	
 	/* Internal objects */
