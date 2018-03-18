@@ -4,11 +4,15 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleAnimator.js" charset="utf-8"></script>
     <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleButton.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleSlider.js" charset="utf-8"></script>
     <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleInfoButton.js" charset="utf-8"></script>
+
     <link rel="stylesheet" href="main.css">
     <script type="text/javascript" src="Parts/parts.js" charset="utf-8"></script>
-    <script type="text/javascript" src="localizedStrings.js" charset="utf-8"></script>
+    <!--<script type="text/javascript" src="localizedStrings.js" charset="utf-8"></script>-->
     <script type="text/javascript" src="main.js" charset="utf-8"></script>
+    <!--<script type='text/javascript' src='AppleClasses/AppleSlider.js' charset='utf-8'/>-->
+    
 </head>
 <body onload="load();">
     <div id="front" ondragenter="Drag(event);" ondragover="Drag(event);" ondrop="Drop(event)" ondragleave="Drag(event)">
@@ -25,6 +29,7 @@
         <div id="go_right" onclick="ShiftFunc('stepforward','Input.Right')"></div>
         <div id="vol_up" onclick="Remote('Input.ExecuteAction','volumeup')"></div>
         <div id="vol_down" onclick="Remote('Input.ExecuteAction','volumedown')"></div>
+        <div id="vol_set"></div>
         <div id="homekey" onclick="Remote('Input.Home')"></div>
         <div id="backkey" onclick="Remote('Input.Back')"></div>
         <div id="infokey" onclick="Remote('Input.Info')"></div>

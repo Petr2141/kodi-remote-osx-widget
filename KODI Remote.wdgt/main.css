@@ -191,6 +191,13 @@ body {
     background-image: url(Images/goright_on.png);
 }
 
+#vol_set {
+    position: absolute;
+    top: 17px;
+    left: 418px;
+    height:60px;
+}
+
 #vol_up {
     width: 22px;
     height: 22px;

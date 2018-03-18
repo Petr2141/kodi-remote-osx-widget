@@ -13,6 +13,8 @@ document.onpaste = Paste;
 var keyboard = 0; //Variable for detection of virtual keyboard
 var connection = new Object();
 
+var gVolSlider;
+
 // Try to connect to XBMC's Remote connection server:
 function connect() {
     var hostvalue = document.getElementById('host').value;
@@ -31,8 +33,13 @@ function disconnect() {
 
 // Function: load(); Called by HTML body element's onload event when the widget is ready to start
 function load() {
+    gVolSlider = new AppleVerticalSlider(
+        document.getElementById("vol_set"),
+        sliderChanged
+    );
     dashcode.setupParts();
     if (widget.preferenceForKey('hostkey') && widget.preferenceForKey('portkeyxbmc')) {load_preferences();};
+    
 }
 
 // Function: remove(); Called when the widget has been removed from the Dashboard
@@ -174,6 +181,9 @@ function buildreq(method,params) {
             break;
         case 'Input.ExecuteAction':
             request = '{"jsonrpc":"2.0","method":"'+method+'","params":{"action":"'+params+'"},"id":1}';
+            break;
+        case 'Application.SetVolume':
+            request = '{"jsonrpc":"2.0","method":"'+method+'","params":{"volume":"'+params+'"}}';
             break;
         case 'Playlist.Clear': // Clear video playlist:
             request = '{"jsonrpc":"2.0","method":"Playlist.Clear","params":{"playlistid":1},"id":1}';
@@ -376,4 +386,11 @@ function makelink(url) {
     else {
         notify.style.display = 'block'; setTimeout('notify.style.display = "none";', 1500);
     };
+}
+
+function sliderChanged(currentValue)
+{
+    var vol = Math.round(currentValue*100);
+    Remote('Application.SetVolume',vol);
+    // Do something with the currentValue passed in
 }

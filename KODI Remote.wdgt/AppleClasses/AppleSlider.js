@@ -305,12 +305,12 @@ function AppleHorizontalSlider(slider, onchanged)
 	// These are read-only. Use the setter functions to set them.
 	this.value = 0.0;
 	this.size = 22;
-	this.trackStartPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_hleft.png";
+	this.trackStartPath = "file://AppleClasses/Images/slide_track_hleft.png";
 	this.trackStartLength = 8;
-	this.trackMiddlePath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_hmid.png";
-	this.trackEndPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_hright.png";
+	this.trackMiddlePath = "file://AppleClasses/Images/slide_track_hmid.png";
+	this.trackEndPath = "file://AppleClasses/Images/slide_track_hright.png";
 	this.trackEndLength = 8;
-	this.thumbPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_thumb.png";
+	this.thumbPath = "file://AppleClasses/Images/slide_thumb.png";
 	this.thumbLength = 23;
 	
 	/* Internal objects */
@@ -402,10 +402,10 @@ function AppleVerticalSlider(slider, onchanged)
 	// These are read-only. Use the setter functions to set them.
 	this.value = 0.0;
 	this.size = 22;
-	this.trackStartPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_vtop.png";
+	this.trackStartPath = "file://AppleClasses/Images/slide_track_vtop.png";
 	this.trackStartLength = 8;
-	this.trackMiddlePath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_vmid.png";
-	this.trackEndPath = "file:///System/Library/WidgetResources/AppleClasses/Images/slide_track_vbottom.png";
+	this.trackMiddlePath = "file://AppleClasses/Images/slide_track_vmid.png";
+	this.trackEndPath = "file://AppleClasses/Images/slide_track_vbottom.png";
 	this.trackEndLength = 8;
 	this.thumbPath = "file://AppleClasses/Images/slide_thumb.png";
 	this.thumbLength = 23;
