@@ -14,6 +14,7 @@ var keyboard = 0; //Variable for detection of virtual keyboard
 var connection = new Object();
 
 var gVolSlider;
+var gStart = false;
 
 // Try to connect to XBMC's Remote connection server:
 function connect() {
@@ -33,13 +34,21 @@ function disconnect() {
 
 // Function: load(); Called by HTML body element's onload event when the widget is ready to start
 function load() {
+    gStart = true;
+    /*gVolSlider = new AppleVerticalSlider(
+        document.getElementById("vol_set"),
+        sliderChanged
+    );*/
+    document.getElementById("vol_set").addEventListener("change", sliderChanged);
     gVolSlider = new AppleVerticalSlider(
         document.getElementById("vol_set"),
         sliderChanged
     );
-    dashcode.setupParts();
-    if (widget.preferenceForKey('hostkey') && widget.preferenceForKey('portkeyxbmc')) {load_preferences();};
+    gVolSlider.continuous = false;
     
+    dashcode.setupParts();
+    //if (widget.preferenceForKey('hostkey') && widget.preferenceForKey('portkeyxbmc')) {load_preferences();};
+    //sliderGetVolume();
 }
 
 // Function: remove(); Called when the widget has been removed from the Dashboard
@@ -56,6 +65,7 @@ function hide() {
 
 // Function: show(); Called when the widget has been shown
 function show() {
+    //sliderGetVolume();
     // Restart any timers that were stopped on hide
 }
 
@@ -183,7 +193,11 @@ function buildreq(method,params) {
             request = '{"jsonrpc":"2.0","method":"'+method+'","params":{"action":"'+params+'"},"id":1}';
             break;
         case 'Application.SetVolume':
-            request = '{"jsonrpc":"2.0","method":"'+method+'","params":{"volume":"'+params+'"}}';
+            request = '{"jsonrpc":"2.0","method":"'+method+'","params":{"volume":'+params+'},"id":1}';
+            break;
+        //sendreq('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1}');
+        case 'Application.GetProperties':
+            request = '{"jsonrpc":"2.0","method":"'+method+'","params":{"properties": ["volume"]},"id":1}';
             break;
         case 'Playlist.Clear': // Clear video playlist:
             request = '{"jsonrpc":"2.0","method":"Playlist.Clear","params":{"playlistid":1},"id":1}';
@@ -207,10 +221,26 @@ function buildreq(method,params) {
 
 // Send request to XBMC's remote server:
 function sendreq(request) {
+    //console.log("before connection.send");
+    //console.log("request = " + request);
     connection.send(request);
     connection.onmessage = function(msg) { 
+        //console.log("onmessage data = ", msg.data);
+        //console.log("onmessage = ", msg);
         //window.alert(msg.data);
         var messages = JSON.parse(msg.data);
+        if ('result' in messages){
+            if (typeof messages.result.volume != 'undefined'){
+                var vol = messages.result.volume;
+                gStart = true;
+                sliderSetVolume(vol);
+            };
+        };
+        if (messages.method=='Application.OnVolumeChanged') {
+            if (typeof messages.params.data.volume != 'undefined'){
+                sliderSetVolume(messages.params.data.volume);
+            }
+        };
         if (messages.method=='Input.OnInputRequested' && keyboard!=1) {
             document.getElementById('sendtext').value = messages.params.data.value;
             showpane('front','textinput'); 
@@ -220,6 +250,7 @@ function sendreq(request) {
             showpane('textinput','front'); 
             keyboard = 0;
         };
+        
     };
     connection.onclose = function () {
         disconnect();
@@ -390,7 +421,23 @@ function makelink(url) {
 
 function sliderChanged(currentValue)
 {
-    var vol = Math.round(currentValue*100);
-    Remote('Application.SetVolume',vol);
-    // Do something with the currentValue passed in
+    //console.log("call sliderChanged");
+    notify.style.display = 'block'; setTimeout('notify.style.display = "none";', 1500);
+    if (gStart == false){   
+        var vol = Math.round(currentValue*100);
+        Remote('Application.SetVolume',vol);    
+    }
+    else {
+        gStart = false;
+    }
+}
+
+function sliderGetVolume(){
+    gStart = true;
+    //sendreq('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1}');
+    Remote('Application.GetProperties');
+}
+
+function sliderSetVolume(vol){// Volume 0-100
+    gVolSlider.setValue(vol/100);//slider 0-1
 }

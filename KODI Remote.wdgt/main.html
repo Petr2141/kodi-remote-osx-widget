@@ -29,7 +29,7 @@
         <div id="go_right" onclick="ShiftFunc('stepforward','Input.Right')"></div>
         <div id="vol_up" onclick="Remote('Input.ExecuteAction','volumeup')"></div>
         <div id="vol_down" onclick="Remote('Input.ExecuteAction','volumedown')"></div>
-        <div id="vol_set"></div>
+        <div id="vol_set" onchange="sliderChanged()"></div>
         <div id="homekey" onclick="Remote('Input.Home')"></div>
         <div id="backkey" onclick="Remote('Input.Back')"></div>
         <div id="infokey" onclick="Remote('Input.Info')"></div>
@@ -48,7 +48,7 @@
         <img id="backImg" src="Parts/Images/back.png">
         <div id="done" onclick="showpane('back','front'); keyboard=0; save_preferences(); disconnect();"></div>
         <form name="preferences_pane" id="form">
-            <input type="text" id="host" value="192.168.1.1">
+            <input type="text" id="host" value="192.168.0.195">
             <input type="text" id="portxbmc" value="9090">
             <input type="text" id="portssh" name="portssh" value="22">
             <input type="text" id="user" value="xbmc">
